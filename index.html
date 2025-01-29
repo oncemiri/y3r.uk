@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>y3r.uk</title>
+    <link rel="icon" type="image/png" href="https://cdn.tensa.dev/1fab7.png">
+    <meta property="og:title" content="y3r.uk">
+    <meta property="og:description" content="discord profile data, simplified (if an image doesnt embed, api is down, therefore site is unusable)">
+    <meta property="og:image" content="https://cdn.tensa.dev/1fab7.png">
+    <meta property="og:url" content="https://y3r.uk/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="y3r.uk">
+    <meta name="twitter:description" content="discord profile data, simplified (if an image doesnt embed, api is down, therefore site is unusable)">
+    <meta name="twitter:image" content="https://cdn.tensa.dev/1fab7.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        @keyframes a{0%{transform:translateY(20px) scale(0.98);opacity:0}100%{transform:translateY(0) scale(1);opacity:1}}
+        @keyframes b{0%{transform:scale(0.96) rotate(-2deg);opacity:0}100%{transform:scale(1) rotate(0);opacity:1}}
+        @keyframes c{0%{transform:rotate(0deg);opacity:0.8}50%{transform:rotate(180deg);opacity:1}100%{transform:rotate(360deg);opacity:0.8}}
+        @keyframes d{0%{transform:translateX(120%);}10%{transform:translateX(-10px);}20%,90%{transform:translateX(0);}95%{transform:translateX(5px);}100%{transform:translateX(120%);}}
+        .a{animation:a 0.7s cubic-bezier(.25,.1,.25,1.2) forwards;will-change:transform,opacity}
+        .b{animation:b 0.5s cubic-bezier(.4,-0.1,.1,1.4) forwards;will-change:transform,opacity}
+        .c{width:24px;height:24px;border:2px solid rgba(255,255,255,.1);border-top-color:white;border-radius:50%;animation:c 1.1s cubic-bezier(.68,-0.55,.27,1.55) infinite;will-change:transform}
+        body{font-family:'Space Grotesk',sans-serif;background:#000;color:#fff;overflow:hidden}
+        :root{color-scheme:dark}
+        .d{border:1px solid rgba(255,255,255,.1);box-shadow:0 0 0 1px rgba(0,0,0,0.9)}
+        .e{background:rgba(255,255,255,.03);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%)}
+        .f{position:fixed;bottom:20px;right:20px;background:rgba(255,50,50,0.15);padding:14px 22px;border-radius:10px;border:1px solid rgba(255,100,100,0.2);animation:d 3.2s cubic-bezier(.17,.67,.44,1.1) forwards;will-change:transform}
+        .g{background:rgba(0,0,0,0.6);backdrop-filter:blur(12px)}
+        .h{transform-origin:center;transition:all 0.3s cubic-bezier(.25,.1,.25,1.2)}
+        .i:hover{transform:translateY(-2px) scale(1.02)}
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="fixed top-4 left-4 e rounded-2xl d shadow-2xl">
+        <nav class="flex gap-4 p-4">
+            <a href="https://discord.gg/3xYzuEE3pw" target="_blank" class="text-white hover:text-neutral-300 transition-all duration-300 px-3 py-2 flex items-center gap-2">🌸 flourish</a>
+            <a href="https://oncemiri.net/" target="_blank" class="text-white hover:text-neutral-300 transition-all duration-300 px-3 py-2 flex items-center gap-2">💻 developer</a>
+            <a href="https://discord.gg/mSFDBEKXM9" target="_blank" class="text-white hover:text-neutral-300 transition-all duration-300 px-3 py-2 flex items-center gap-2">👾 discord</a>
+            <a href="https://s.y3r.uk/" class="text-white hover:text-neutral-300 transition-all duration-300 px-3 py-2 flex items-center gap-2">🖥️ services</a>
+        </nav>
+    </div>
+
+    <main class="flex flex-col items-center justify-center min-h-screen px-4">
+        <div class="text-center space-y-8 w-full max-w-sm a">
+            <h1 class="text-6xl font-medium tracking-tight">y3r.uk 🌸</h1>
+            <p class="text-white/80 text-lg">discord profile data, simplified</p>
+            <div class="mt-10 space-y-4" style="animation-delay:0.1s">
+                <input type="text" id="discordId" placeholder="paste discord id" class="w-full px-4 py-3.5 rounded-xl e d focus:border-white/20 focus:outline-none text-sm transition-all duration-300 shadow-xl h i">
+                <div class="flex gap-2" style="animation-delay:0.2s">
+                    <button onclick="setOption('pfp')" id="pfpBtn" class="flex-1 px-4 py-3.5 rounded-xl e hover:bg-white/15 transition-all duration-300 text-sm font-medium shadow-xl d h i">profile picture</button>
+                    <button onclick="setOption('banner')" id="bannerBtn" class="flex-1 px-4 py-3.5 rounded-xl e hover:bg-white/15 transition-all duration-300 text-sm font-medium shadow-xl d h i opacity-50">banner</button>
+                </div>
+                <button onclick="fetchData()" id="fetchBtn" class="w-full px-4 py-3.5 rounded-xl e hover:bg-white/15 transition-all duration-300 text-sm font-medium shadow-xl d h i" style="animation-delay:0.3s">view profile ✨</button>
+            </div>
+        </div>
+    </main>
+
+    <div id="loading" class="hidden fixed inset-0 g flex items-center justify-center z-50">
+        <div class="c"></div>
+    </div>
+
+    <div id="imagePopup" class="hidden fixed inset-0 g p-4 flex items-center justify-center z-50">
+        <div class="max-w-xl w-full e rounded-2xl p-8 d shadow-2xl b">
+            <div class="flex justify-between items-start gap-6 mb-6">
+                <h3 class="font-medium text-xl">profile image</h3>
+                <button onclick="hideImagePopup()" class="text-white/60 hover:text-white transition-all duration-300 hover:rotate-90 p-1 h i">✕</button>
+            </div>
+            <img id="profileImg" class="w-full rounded-xl mb-6 d">
+            <a id="downloadBtn" class="w-full px-4 py-3.5 rounded-xl e hover:bg-white/15 transition-all duration-300 text-sm font-medium shadow-xl d text-center block h i" download="profile.png">download</a>
+        </div>
+    </div>
+
+    <div id="errorPopup" class="hidden fixed inset-0 g p-4 flex items-center justify-center z-50">
+        <div class="max-w-xl w-full e rounded-2xl p-8 d shadow-2xl b">
+            <div class="flex justify-between items-start gap-6">
+                <div class="space-y-3">
+                    <h3 class="font-medium text-xl">service unavailable 😔</h3>
+                    <p class="text-white/80 leading-relaxed">the api seems to be down right now. please try again later!</p>
+                </div>
+                <button onclick="hideError()" class="text-white/60 hover:text-white transition-all duration-300 hover:rotate-90 p-1 h i">✕</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentOption = localStorage.getItem('option') || 'pfp';
+
+        function setOption(option) {
+            currentOption = option;
+            localStorage.setItem('option', option);
+            updateButtons();
+        }
+
+        function updateButtons() {
+            document.getElementById('pfpBtn').style.opacity = currentOption === 'pfp' ? '1' : '0.5';
+            document.getElementById('bannerBtn').style.opacity = currentOption === 'banner' ? '1' : '0.5';
+        }
+
+        function showLoading() {
+            document.getElementById('loading').classList.remove('hidden');
+        }
+
+        function hideLoading() {
+            document.getElementById('loading').classList.add('hidden');
+        }
+
+        function showImagePopup(url) {
+            const proxyUrl = `https://corsproxy.io/?url=${encodeURIComponent(url)}`;
+            document.getElementById('profileImg').src = proxyUrl;
+            document.getElementById('downloadBtn').href = proxyUrl;
+            document.getElementById('imagePopup').classList.remove('hidden');
+        }
+
+        function hideImagePopup() {
+            document.getElementById('imagePopup').classList.add('hidden');
+        }
+
+        function showError() {
+            document.getElementById('errorPopup').classList.remove('hidden');
+        }
+
+        function hideError() {
+            document.getElementById('errorPopup').classList.add('hidden');
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'f';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
+        }
+
+        async function fetchData() {
+            const discordId = document.getElementById('discordId').value.trim();
+            if (!discordId) return;
+
+            showLoading();
+            try {
+                const apiUrl = `https://dis.oncemiri.net/api/${currentOption}/${discordId}`;
+                const proxyUrl = `https://corsproxy.io/?url=${encodeURIComponent(apiUrl)}`;
+                
+                const response = await fetch(proxyUrl);
+                
+                if (response.status === 404) {
+                    throw new Error('User not found');
+                }
+                if (!response.ok) {
+                    throw new Error('API error');
+                }
+
+                showImagePopup(apiUrl);
+            } catch (error) {
+                if (error.message === 'User not found') {
+                    showNotification('User, banner, or pfp not found');
+                } else {
+                    showError();
+                }
+            } finally {
+                hideLoading();
+            }
+        }
+
+        updateButtons();
+    </script>
+</body>
+</html>
